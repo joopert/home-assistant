@@ -202,7 +202,10 @@ class NAD(MediaPlayerDevice):
         else:
             self._mute = True
 
-        self._volume = self.calc_volume(self._nad_receiver.main_volume("?"))
+        main_volume = self._nad_receiver.main_volume("?")
+        if main_volume is not None:
+            self._volume = self.calc_volume(main_volume)
+
         self._source = self._source_dict.get(self._nad_receiver.main_source("?"))
 
     def calc_volume(self, decibel):
